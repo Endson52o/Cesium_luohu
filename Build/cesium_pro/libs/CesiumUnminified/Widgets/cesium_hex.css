@@ -1,0 +1,100 @@
+  html, 
+  body,
+  #cesiumContainer1 {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  .right-viewer{
+    float: right;
+    width: 50%;
+    height: 100%;
+    margin: 0;
+    position: absolute;
+    right: 0px;
+    background: red;
+    z-index: 1;
+    top: 0px;
+    display: none;
+  }
+ .btn {
+  scale: 0.7;
+  width: 80px;
+  height: 49px;
+  font-size: 1.0em;
+  cursor: pointer;
+  background-color: #fff;
+  color: #000;
+  border: aliceblue;
+  border-radius: 5px;
+  -webkit-transition: all .4s;
+  transition: all .4s;
+  position: absolute;
+  z-index: 1;
+}
+ .btn:hover {
+  border-radius: 5px;
+  -webkit-transform: translateY(-10px);
+      -ms-transform: translateY(-10px);
+          transform: translateY(-10px);
+  -webkit-box-shadow: 0 7px 0 -2px #f85959,
+   0 15px 0 -4px #39a2db,
+   0 16px 10px -3px #39a2db;
+          box-shadow: 0 7px 0 -2px #f85959,
+   0 15px 0 -4px #39a2db,
+   0 16px 10px -3px #39a2db;
+ }
+ .btn:active {
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  -webkit-transform: translateY(-5px);
+      -ms-transform: translateY(-5px);
+          transform: translateY(-5px);
+  -webkit-box-shadow: 0 2px 0 -2px #f85959,
+   0 8px 0 -4px #39a2db,
+   0 12px 10px -3px #39a2db;
+          box-shadow: 0 2px 0 -2px #f85959,
+   0 8px 0 -4px #39a2db,
+   0 12px 10px -3px #39a2db;
+ }
+.mycesiumlabalse {
+  width: 400px;
+  height: 80px;
+  background: #ffffff78;
+  position: absolute;
+  right: 5px;
+  bottom: 30px;
+  z-index: 1;
+}
+.pic{
+  position: absolute;
+  height: 70px;
+  width: 90px;
+  z-index: 2;
+  top: 5px;
+  border-style: ridge;
+  border-color: #339972;
+}
+#cesium_positon{
+  width: 80%;
+  height: 20px;
+  position: absolute;
+  bottom: 5px;
+  left: 10px;
+  font-size: 15px;
+  z-index: 1;
+}
+.map_span{
+  position: absolute;
+  color: #FFF;
+  bottom: 0;
+  right: 0;
+  padding: 3px 3px;
+  background-color: #3385ff;
+  font-size: 12px;
+}
+.labal_positon{
+  position: absolute;
+}

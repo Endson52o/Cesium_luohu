@@ -1,0 +1,110 @@
+﻿{
+  "map3d": {
+    "homeButton": false,
+    "sceneModePicker": true,
+    "navigationHelpButton": true,
+    "infoBox": false,
+    "vrButton": true,
+    "fullscreenButton": true,
+    "animation": false,
+    "timeline": false,
+    "geocoder": false,
+    "showRenderLoopErrors": true,
+    "baseLayerPicker": true,
+    "minzoom": 1,
+    "maxzoom": 50000000,
+    "style": {
+      "atmosphere": true,
+      "lighting": false,
+      "fog": false,
+      "testTerrain": false
+    },
+    "contextmenu": true,
+    "mouseZoom": true,
+    "location": {
+      "fps": true,
+      "format": "<div>经度:{x}</div> <div>纬度:{y}</div> <div>海拔：{z}米</div> <div>层级：{level}</div> <div>方向：{heading}度</div> <div>俯仰角：{pitch}度</div> <div>视高：{height}米</div>"
+    },
+    "navigation": {
+      "legend": {
+        "left": "0px",
+        "bottom": "-1px"
+      },
+      "compass": {
+        "top": "20px",
+        "right": "20px"
+      }
+    },
+    "terrain": {
+      "url": "https://gisearth-1301434080.cos.ap-nanjing.myqcloud.com/MapData/terrain",
+      "visible": false
+    },
+    "token": "test",
+    "serverIP": "http://localhost:9088/gisadmin-system",
+    "operationallayers":[],
+    "operation": {
+      "moveSpeed": 2,
+      "LRRotationSpeed": 0.0056218,
+      "TDRotationSpeed": 0.88,
+      "minViewingAngle": 10,
+      "maxViewingAngle": 89,
+      "PitchAngleReversal": true,
+      "MouseRightRotate": true,
+      "lowHeight": 0,
+      "Socket": {
+        "work": false
+      }
+    },
+    "basemaps": [
+      {
+        "id": 10,
+        "name": "地图底图",
+        "type": "group"
+      },
+      
+      {
+        "pid": 10,
+        "name": "天地图卫星",
+        "icon": "img/basemaps/tdt_img.png",
+        "type": "www_tdt",
+        "layer": "img_d",
+        "key": [ "df7870fea240788b487f759ee949a08e" ],
+        "crs": 4326,
+        "minimumLevel": 0,
+        "maximumLevel": 17,
+        "visible": true
+      },
+      {
+        "pid": 10,
+        "name": "天地图电子",
+        "icon": "img/basemaps/tdt_vec.png",
+        "type": "group",
+        "layers": [
+          {
+            "name": "底图",
+            "type": "www_tdt",
+            "layer": "vec_d",
+            "key": [ "df7870fea240788b487f759ee949a08e" ]
+          },
+          {
+            "name": "注记",
+            "type": "www_tdt",
+            "layer": "vec_z",
+            "key": [ "df7870fea240788b487f759ee949a08e" ]
+          }
+        ]
+      },
+
+
+      {
+        "pid": 10,
+        "name": "单张图片",
+        "icon": "img/basemaps/offline.png",
+        "type": "image",
+        "url": "img/tietu/world.jpg"
+      }
+    ]
+   
+  }
+
+}

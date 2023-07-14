@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="../../cesium_pro/libs/CesiumUnminified/Cesium.js"></script>
+    <script src="../libs/CesiumUnminified/Cesium.js"></script>
     <link href="../libs/CesiumUnminified/Widgets/cesium_hex.css" rel="stylesheet">
     <link href="../libs/CesiumUnminified/Widgets/widgets.css" rel="stylesheet">
+    <script src="../../cesium_pro/libs/CesiumUnminified/js/jQuery.js"></script>
 </head>
 <body>
     <div id="mapType" class="mycesiumlabalse">
@@ -54,7 +56,7 @@
     </div>
     <div id="toolsbtn">
         <button id="my_test11" class="btn" onclick="my_test3()">点我!</button>
-        <button id="my_test22" class="btn" style="top: 50px;">关闭</button>
+        <button id="my_test22" class="btn" style="top: 50px;"onclick= "getheight()">关闭</button>
         <button id="my_test33" class="btn" style="top: 100px;" onclick="addmaps()">电子地图</button>
     </div>
     <div id="cesiumContainer1"></div>
@@ -77,17 +79,17 @@
         viewer.imageryLayers.get(0).show = false;
         // 隐藏版权信息
         viewer._cesiumWidget._creditContainer.style.display = "none";
-        const esri = viewer.imageryLayers.addImageryProvider(new Cesium.ArcGisMapServerImageryProvider({
-            url: 'https://map.geoq.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer'
-        })
-        )
+
+        // const esri = viewer.imageryLayers.addImageryProvider(new Cesium.ArcGisMapServerImageryProvider({
+        //     url: 'https://map.geoq.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer'
+        // })
+        // )
         var tileset1 = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
             // url:'http://10.169.3.15:8088/gw/Production_2_osgb-3dtiles/tileset.json'
             // url:'http://localhost:8005/Data/SG_3dtiles/tileset.json',
             url: 'http://10.169.3.15:8088/gw/Production_2_osgb-3dtiles/tileset.json',
         }));
         viewer.scene.primitives.add(tileset1);
-
         // // 添加天地图地形数据
         // var tdtTerrainProvider = new Cesium.createWorldTerrain({
         //     url: 'http://t0.tianditu.gov.cn/terrain/ter_c',
@@ -102,7 +104,6 @@
         // viewer.camera.setView({
         //     destination: Cesium.Cartesian3.fromDegrees(120.43511962890625, 36.16095445833333, 15000000.0)
         // });
-
         var j = 1;
         var button = document.getElementById("my_test33");
         button.addEventListener("click",
@@ -143,26 +144,28 @@
             $("right-viewer").style.display = "none";
 
         }
-        optionsA = {
-            destination: Cesium.Cartesian3.fromDegrees(
-                114.1137459,
-                22.548875,
-                500
-            ),
-        };
-        const camera = viewer.scene.camera;
-        camera.flyTo(this.optionsA);
-    </script>
-    <script src="../../cesium_pro/libs/CesiumUnminified/js/maps.js"></script>
-    <script src="../../cesium_pro/libs/CesiumUnminified/js/shuangping.js"></script>
-    <script>
         viewer.camera.flyTo({
-    destination: Cesium.Cartesian3.fromDegrees(-75.170726, 39.952515, 2000.0),
-    // 设置相机的最小高度为地球的半径加上一定的偏移量
-    // 这里偏移量为地球半径的10倍
-    minimumHeight: Cesium.Math.addEarthRadius(10.0)
-});
+            destination: Cesium.Cartesian3.fromDegrees(114.1137459,22.548875,500), // 飞行目的地，视角高度
+            duration: 2, // 飞行所用时间
+            // 飞行完成后的事件
+        });
+    </script>
+    <script>
+        function test_a() {
+            var handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
+            handler.setInputAction(function (movement) {
+                var pick = viewer.scene.camera.pickEllipsoid(movement.endPosition);
+                var x = Cesium.Cartographic.fromCartesian(pick);
+                var lon = Cesium.Math.toDegrees(x.longitude)
+                console.log(movement);
+                console.log(pick);
+                console.log(lon);
+                console.log(x.longitude);
+            }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+        }
     </script>
 </body>
-
+<script src="../../cesium_pro/libs/CesiumUnminified/js/addfeatures.js"></script>
+<script src="../../cesium_pro/libs/CesiumUnminified/js/maps.js"></script>
+<script src="../../cesium_pro/libs/CesiumUnminified/js/shuangping.js"></script>
 </html>

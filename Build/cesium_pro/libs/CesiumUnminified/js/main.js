@@ -1,3 +1,4 @@
+// document.write("<script language=javascript src='../libs/CesiumUnminified/js/button.js'></script>");
 var viewer = new Cesium.Viewer("cesiumContainer1", {
   animation: false,//动画小部件
   baseLayerPicker: true,//地图图层组件
@@ -24,6 +25,7 @@ viewer.scene.globe.depthTestAgainstTerrain = true;
 var tileset1 = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
   // url:'http://10.169.3.15:8088/gw/Production_2_osgb-3dtiles/tileset.json'
   // url:'http://localhost:8005/Data/SG_3dtiles/tileset.json',
+  url:'http://10.169.3.15:8088/gw/Production_2_osgb-3dtiles/tileset.json',
 }));
 viewer.scene.primitives.add(tileset1);
 start_test();
@@ -76,6 +78,7 @@ function start_test() {
     }, 400)
   }
 }
+
 //Cesium获取鼠标点击的经纬度（lon、lat）、高度（height）、相机的视角（heading、pitch、roll）
 function postion_get() {
   var canvas = viewer.scene.canvas;
@@ -89,7 +92,7 @@ function postion_get() {
       var cartographic = ellipsoid.cartesianToCartographic(cartesian);
       lon = Cesium.Math.toDegrees(cartographic.longitude).toFixed(7);
       lat = Cesium.Math.toDegrees(cartographic.latitude).toFixed(7);
-      haiba = cartographic.height.toFixed(2);
+      this.haiba = cartographic.height.toFixed(2);
       //地理高度
       //height = (cartographic.height+1).toFixed(2);
       //方向   围绕Z轴旋转
@@ -119,7 +122,11 @@ function postion_get() {
 }
 //点击后绕点飞行
 function roll_test() {
-  //var position = viewer.camera.position;
+  if ("undefined" == typeof lat || "undefined" == typeof lon){
+    alert('请先选择要绕飞的位置!')
+    return;
+  }else{
+//var position = viewer.camera.position;
   // 给定飞行一周所需时间，比如10s, 那么每秒转动度数
   var angle = 360 / 20;
   // 给定相机距离点多少距离飞行，这里取值为5000m
@@ -152,43 +159,10 @@ function roll_test() {
     viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
   };
   viewer.clock.onTick.addEventListener(Exection);
+  }
+  
 }
-//双屏功能
-  var i = 2;
-  var button = document.getElementById("cesium_shuanping_button");
-  button.addEventListener("click",
-    function () {
-      if (i % 2 == 0) {
-        my_test()
-      }
-      else {
-        my_test1()
-      }
-      i++;
-    })
-  function $(id) { return document.getElementById(id) }
-  function my_test() {
-    $("cesiumContainer1").style.width = "50%";
-    $("right-viewer").style.display = "block";
-    cesium_shuangpping();
-  }
-  function my_test1() {
-    $("cesiumContainer1").style.width = "100%";
-    $("right-viewer").style.display = "none";
-  }
-  //切换电子地图
-  var j = 2;
-  var button = document.getElementById("2dmaps");
-  button.addEventListener("click",
-    function () {
-      if (j % 2 == 0) {
-        addtdtmaps();
-      }
-      else {
-        addmaps();
-      }
-      j++;
-    })
+
 //双屏联动方法
 function cesium_shuangpping() {
   const rightViewer = new Cesium.Viewer('right-viewer', {

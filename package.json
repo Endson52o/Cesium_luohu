@@ -52,7 +52,8 @@
   ],
   "dependencies": {
     "@cesium/engine": "2.4.0",
-    "@cesium/widgets": "2.2.0"
+    "@cesium/widgets": "2.2.0",
+    "jQuery": "^1.7.4"
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "^3.276.0",

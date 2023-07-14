@@ -2,80 +2,29 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="../../cesium_pro/libs/CesiumUnminified/Widgets/cesium_hex.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../libs/CesiumUnminified/Cesium.js"></script>
+  <link href="../libs/CesiumUnminified/Widgets/cesium_hex.css" rel="stylesheet">
+  <link href="../libs/CesiumUnminified/Widgets/widgets.css" rel="stylesheet">
+  <script src="../libs/CesiumUnminified/js/jQuery.js"></script>
+  <style>
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  </style>
 </head>
 <body>
-    <button id="mybtn123" onclick="mytest()"
-        style="height: 50px;width: 50px;position: absolute;background-color: greenyellow;top:50%">计算
-    </button>
-    <button id="cesium_shuanping_button" class="btn" style="left: -13px;top: 80px;">双屏</button>
-    <button type="button" onmouseover="alert('您的鼠标已经移动到了该按钮上');">请将鼠标移动至此处</button><br>
-    <a href="#" onmouseover="myEvent()">请将鼠标移动至此处</a>
-    <input type="text" onkeyup="myEvent11()">
-    <script>
-        document.bgColor = "green"
-        function mytest() {
-            for (var i = 0; i >= 0; i++) {
-                if (i > 20) {
-                    var res1 = window.confirm("i=:" + i + "超出范围了");
-                    if (res1 == true) {
-                        document.bgColor = "yellow"
-                        document.write("下次再来");
-                    }
-                    else {
-                        document.write("退出");
-                        document.bgColor = "blue";
-                    }
-                    return i;
-                }
-                else {
+  <div id=cesiumContainer1></div>
+  <div type="button" id="test" class="btn"></div>
+  <script src="../libs/CesiumUnminified/js/main.js"></script>
+  <script src="../libs/CesiumUnminified/js/addfeatures.js"></script>
+  </body>
 
-                    if (i % 2 == 0) {
-                        document.write(i + "能被2整除", "<br>");
-                    }
-                    else {
-                        document.write(i + "不能被2整除", "<br>")
-                    }
-                }
-
-            }
-        }
-
-        function mytest11() {
-            document.write("按钮测试");
-        }
-        document.getElementById("cesium_shuanping_button").onclick = mytest11;
-
-        function myEvent() {
-            alert('您的鼠标已经移动到了该链接上');
-        }
-
-        function myEvent11() {
-            alert("您按下了键盘上的某个按钮，并将其释放了");
-        }
-
-        document.addEventListener("click", function () {
-            document.body.innerHTML = document.activeElement;
-            var box = document.createElement('div');
-            document.body.appendChild(box);
-            var att = document.createAttribute('id');
-            att.value = "myDiv";
-            document.getElementsByTagName('div')[0].setAttributeNode(att);
-            document.getElementById("myDiv").innerHTML = Math.random();
-            var btn = document.createElement("button");
-            var t = document.createTextNode("按钮");
-            btn.appendChild(t);
-            document.body.appendChild(btn);
-            var att = document.createAttribute('onclick');
-            att.value = "myfunction()";
-            document.getElementsByTagName('button')[0].setAttributeNode(att);
-        });
-        function myfunction() {
-            alert(document.title);
-        }
-    </script>
-</body>
 </html>

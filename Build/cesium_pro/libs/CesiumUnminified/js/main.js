@@ -12,6 +12,7 @@ var viewer = new Cesium.Viewer("cesiumContainer1", {
   navigationHelpButton: false,//帮助按钮
   navigationInstructionsInitiallyVisible: false,
   scene3DOnly: true,//如果设置为true，则所有几何图形以3D模式绘制以节约GPU资源
+
 });
 // 隐藏版权信息
 viewer._cesiumWidget._creditContainer.style.display = "none";
@@ -23,9 +24,12 @@ viewer.scene.globe.depthTestAgainstTerrain = true;
   viewer.scene.globe.enableLighting = true;
 //加载3dtiels数据
 var tileset1 = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
+  maximumScreenSpaceError: 64,// 数值加大，能让最终成像变模糊
+  dynamicScreenSpaceError: true, // 根据测试，有了这个后，会在真正的全屏加载完之后才清晰化房屋
+  maximumMemoryUsage: 512, // 内存分配变小有利于倾斜摄影数据回收，提升性能体验
   // url:'http://10.169.3.15:8088/gw/Production_2_osgb-3dtiles/tileset.json'
-  // url:'http://localhost:8005/Data/SG_3dtiles/tileset.json',
-  url:'http://10.169.3.15:8088/gw/Production_2_osgb-3dtiles/tileset.json',
+  url:'http://localhost:8005/Data/SG_3dtiles/tileset.json',
+  // url:'http://10.169.3.15:8088/gw/Production_2_osgb-3dtiles/tileset.json',
 }));
 viewer.scene.primitives.add(tileset1);
 start_test();
@@ -181,6 +185,9 @@ function cesium_shuangpping() {
     // terrainProvider: Cesium.createWorldTerrain(),//加载地形
   })
   var tileset2 = rightViewer.scene.primitives.add(new Cesium.Cesium3DTileset({
+    maximumScreenSpaceError: 64,// 数值加大，能让最终成像变模糊
+    dynamicScreenSpaceError: true, // 根据测试，有了这个后，会在真正的全屏加载完之后才清晰化房屋
+    maximumMemoryUsage: 512, // 内存分配变小有利于倾斜摄影数据回收，提升性能体验
     url: 'http://10.169.3.17:9999/stdms/service/mesh/luohu2021/tileset.json',
   }));
   const MOUSE_TYPE = {

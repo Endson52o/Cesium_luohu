@@ -43,7 +43,7 @@ function mm(){
 }
 // 系统默认视角，根据点来设定
 function cesium_home() {
-  viewer.camera.flyTo(this.optionsC)
+  viewer.camera.flyTo(optionsC)
 }
 //进入系统后多次飞行:
 function start_test() {
@@ -70,13 +70,13 @@ function start_test() {
     easingFunction: Cesium.EasingFunction.LINEAR_NONE,
   };
   const camera = viewer.scene.camera;
-  camera.flyTo(this.optionsA);
-  this.optionsA.complete = () => {
+  camera.flyTo(optionsA);
+  optionsA.complete = () => {
     setTimeout(() => {
-      camera.flyTo(this.optionsB);
-      this.optionsB.complete = () => {
+      camera.flyTo(optionsB);
+      optionsB.complete = () => {
         setTimeout(() => {
-          camera.flyTo(this.optionsC)
+          camera.flyTo(optionsC)
         }, 400)
       }
     }, 400)
@@ -96,7 +96,7 @@ function postion_get() {
       var cartographic = ellipsoid.cartesianToCartographic(cartesian);
       lon = Cesium.Math.toDegrees(cartographic.longitude).toFixed(7);
       lat = Cesium.Math.toDegrees(cartographic.latitude).toFixed(7);
-      this.haiba = cartographic.height.toFixed(2);
+      haiba = cartographic.height.toFixed(2);
       //地理高度
       //height = (cartographic.height+1).toFixed(2);
       //方向   围绕Z轴旋转

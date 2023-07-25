@@ -13,7 +13,11 @@ function getheight() {
             var car = Cesium.Cartographic.fromDegrees(dataPoint_longitude, dataPoint_latitude);
             var height = viewer.scene.sampleHeight(car);
             var j = i;
-            console.log('第'+j+'个：' + test3.features[i].properties.NAME + ';' + height);
+
+                console.log('第'+j+'个：' + test3.features[i].properties.NAME + ';' + height);
+
+
+
             var point_position = Cesium.Cartesian3.fromDegrees(dataPoint_longitude, dataPoint_latitude, height);
             viewer.entities.add({
                 position: point_position,

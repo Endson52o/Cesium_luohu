@@ -44,7 +44,7 @@ function addmaps(){
     viewer.imageryLayers.remove(this.satellite_image1);
     viewer.imageryLayers.remove(this.satellite_image_labals);
     viewer.imageryLayers.remove(this.esri);
-    this.addmaps1 = viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
+    addmaps1 = viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
         url: "http://t0.tianditu.gov.cn/vec_w/wmts?tk=df7870fea240788b487f759ee949a08e",
         layer: "vec",
         style: "default",
@@ -53,7 +53,7 @@ function addmaps(){
         maximumLevel: 18,
         subdomains: ['0', '1', '2', '3', '4', '5', '6', '7']
     }))
-    this.addmaps2 = viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
+    addmaps2 = viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
         url: "http://t{s}.tianditu.gov.cn/ibo_w/wmts?tk=df7870fea240788b487f759ee949a08e",
         layer: "ibo",
         style: "default",
@@ -62,7 +62,7 @@ function addmaps(){
         maximumLevel: 18,
         subdomains: ['0', '1', '2', '3', '4', '5', '6', '7']
     }))
-    this.addmaps3 = viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
+    addmaps3 = viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
         url: "http://t0.tianditu.gov.cn/cva_w/wmts?tk=df7870fea240788b487f759ee949a08e",
         layer: "cva",
         style: "default",
@@ -81,7 +81,7 @@ function arcgismaps(){
     viewer.imageryLayers.remove(this.addmaps1);
     viewer.imageryLayers.remove(this.addmaps2);
     viewer.imageryLayers.remove(this.addmaps3);
-    this.esri = viewer.imageryLayers.addImageryProvider(new Cesium.ArcGisMapServerImageryProvider({
+    esri = viewer.imageryLayers.addImageryProvider(new Cesium.ArcGisMapServerImageryProvider({
         url:'https://map.geoq.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer'
     })
 

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+    <div id="demo">
+        <h1>XMLHttpRequest 对象</h1>
+        <button type="button" onclick="loadDoc()">修改内容</button>
+    </div>
+
+    <script>
+        function loadData(callback) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var mytestdata = JSON.parse(this.responseText);
+                    callback(mytestdata);
+                }
+            };
+            xhttp.open("GET", "../config/point.json", true);
+            xhttp.send();
+        }
+
+        loadData(function (mytestdata) {
+            console.log(mytestdata.type);
+        });
+
+    </script>
+
+</body>
+
+</html>

@@ -20,11 +20,51 @@
     }
   </style>
 </head>
+
 <body>
   <div id=cesiumContainer1></div>
-  <div type="button" id="test" class="btn"></div>
-  <div type="button" id="test1" class="btn"></div>
+  <script>
+    var viewer = new Cesium.Viewer("cesiumContainer1", {
+      animation: false,//动画小部件
+      baseLayerPicker: true,//地图图层组件
+      fullscreenButton: false,//全屏组件
+      geocoder: true,//地理编码搜索组件
+      homeButton: false,//首页组件
+      infoBox: false,//信息框
+      sceneModePicker: false,//场景模式
+      selectionIndicator: false,//选取指示器组件
+      timeline: false,//时间轴
+      navigationHelpButton: false,//帮助按钮
+      navigationInstructionsInitiallyVisible: false,
+      scene3DOnly: true,//如果设置为true，则所有几何图形以3D模式绘制以节约GPU资源
+    });
+    //隐藏默认地图
+    viewer.imageryLayers.get(0).show = false;
+    var tileset1 = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
+      maximumScreenSpaceError: 64,// 数值加大，能让最终成像变模糊
+      dynamicScreenSpaceError: true, // 根据测试，有了这个后，会在真正的全屏加载完之后才清晰化房屋
+      maximumMemoryUsage: 512, // 内存分配变小有利于倾斜摄影数据回收，提升性能体验
+      // url:'http://10.169.3.15:8088/gw/Production_2_osgb-3dtiles/tileset.json'
+      url: 'http://localhost:8005/Data/SG_3dtiles/tileset.json',
+      // url:'http://10.169.3.15:8088/gw/Production_2_osgb-3dtiles/tileset.json',
+    }));
+    viewer.scene.primitives.add(tileset1);
+  </script>
+  <script>
+    cesium_home()
+    function cesium_home() {
+      viewer.camera.flyTo({
+        destination: { x: -2407713.0067084413, y: 5379289.807831032, z: 2430628.2872445565 },
+        orientation: {
+          heading: 0.81,
+          pitch: -0.41,
+        },
+        easingFunction: Cesium.EasingFunction.LINEAR_NONE,
+      })
+    }
+  </script>
   </body>
-  <script src="../libs/CesiumUnminified/js/main.js"></script>
-  <script src="../libs/CesiumUnminified/js/addfeatures.js"></script>
+<!-- <script src="../libs/CesiumUnminified/js/main.js"></script> -->
+<!-- <script src="../libs/CesiumUnminified/js/addfeatures.js"></script> -->
+<script src="../libs/CesiumUnminified/js/geojson.js"></script>
 </html>

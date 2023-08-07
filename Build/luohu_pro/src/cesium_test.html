@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../libs/js/jquery-3.7.0.min.js"></script>
+  <script src="../libs/CesiumUnminified/Cesium.js"></script>
+  <link href="../libs/CesiumUnminified/Widgets/widgets.css" rel="stylesheet">
+  <link href="../libs/css/cesium_hex.css" rel="stylesheet">
+</head>
+
+<body>
+  <div id="right-viewer" class="right-viewer"></div>
+  <div id="cesiumContainer1" class="cesiumWindows">
+    <div id="button" style="top:0;width:60px;height:100%;position:absolute;z-index:1;">
+      <div>
+        <button id="cesium_home_button" class="btn" style="top: -5px;" onclick="cesium_home()">首页</button>
+      </div>
+      <div>
+        <button id="cesium_shuanping_button" class="btn" style="top: 30px;">双屏</button>
+      </div>
+      <div>
+        <button id="cesium_roll_button" class="btn" style="top: 65px;" onclick="roll_test()">绕飞</button>
+      </div>
+      <div>
+        <button id="fenChen" class="btn" style="top: 100px;">分层分户</button>
+        <div id="fenchenfenhu" class="list">
+          <button id="zl" class="btn1">总览</button>
+          <button id="xq" class="btn1" style="top: 20px;">小区住宅</button>
+          <button id="sy" class="btn1" style="top: 40px;">商业楼宇</button>
+          <button id="zht" class="btn1" style="top: 60px;">大型商业综合体</button>
+        </div>
+      </div>
+
+      <div>
+        <button id="BuJian" class="btn" style="top: 135px;">城市部件</button>
+        <div id="chenshibujian" class="list" style="top:150px">
+          <button id="zt" class="btn1">总体</button>
+          <button id="dBJ" class="btn1" style="top: 20px;">点部件</button>
+          <button id="xBJ" class="btn1" style="top: 40px;">线部件</button>
+          <button id="mBJ" class="btn1" style="top: 60px;">面部件</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="mapType" class="mycesiumlabalse">
+    <div type="images" class="pic"
+      style="background-image: url(../images/3dmaps.png);background-size:cover;right: 5px;">
+      <span class="map_span">三维</span>
+    </div>
+    <div type="images" onclick="addtdtmaps()" class="pic"
+      style="background-image: url(../images/2dmaps.png);background-size:cover;right: 105px;">
+      <span class="map_span">地球</span>
+    </div>
+    <div type="images" onclick="arcgismaps()" class="pic"
+      style="background-image: url(../images/nightpic.png);background-size:cover;right: 205px;">
+      <span class="map_span">夜景</span>
+    </div>
+    <div type="images" onclick="addmaps()" class="pic"
+      style="background-image: url(../images/streentpic.png);background-size:cover;right: 305px;">
+      <span class="map_span">地图</span>
+    </div>
+  </div>
+  <!-- 设置经纬度显示 -->
+  <div id="cesium_positon">
+    <div style="width: 165px;" class="labal_positon">
+      <font size="2" color="white">点位经度：<span id="longitude_show"></span>°</font>
+    </div>
+    <div style="width: 180px;left: 160px;" class="labal_positon">
+      <font size="2" color="white">点位纬度：<span id="latitude_show"></span>°</font>
+    </div>
+    <div style="width: 120px;left: 320px;" class="labal_positon">
+      <font size="2" color="white">海拔高：<span id="height_show"></span>米</font>
+    </div>
+    <div style="width: 530px;left: 460px;" class="labal_positon">
+      <font size="2" color="white">当前镜头信息：<span id="mess_carmer"></span></font>
+    </div>
+    <div style="width: 120px;left: 1000px;" class="labal_positon">
+      <font size="2" color="white">镜头高度：<span id="height_carmer"></span></font>
+    </div>
+    <div style="width: 120px;left: 1150px;" class="labal_positon">
+      <font size="2" color="white">旋转角：<span id="heading_carmer"></span></font>
+    </div>
+    <div style="width: 120px;left: 1250px;" class="labal_positon">
+      <font size="2" color="white">俯仰角<span id="pitch_carmer"></span></font>
+    </div>
+  </div>
+
+  </div>
+</body>
+<script src="../libs/js/main.js"></script>
+<script src="../libs/js/maps.js"></script>
+<script src="../libs/js/button.js"></script>
+<script src="../libs/js/addfeatures.js"></script>
+<script src="../libs/js/selecttext.js"></script>
+
+</html>

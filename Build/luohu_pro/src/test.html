@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../libs/CesiumUnminified/js/jquery-3.7.0.min.js"></script>
+    <link rel="stylesheet" href="../libs/css/oppurtunity.css">
+</head>
+<style>
+</style>
+
+<body>
+    <div class="oppurtunity_section">
+        <div class="card">
+            <img class="card-img-top" src="../images/R-C.jpg">
+            <div class="card-body">
+                <h5 class="card-title">输入描述内容</h5>
+                <ul>
+                    <li>
+                        输入详细内容
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="card">
+            <img class="card-img-top" src="../images/R-C.jpg">
+            <div class="card-body">
+                <h5 class="card-title">输入描述内容</h5>
+                <ul>
+                    <li>
+                        输入详细内容
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="card">
+            <img class="card-img-top" src="../images/R-C.jpg">
+            <div class="card-body">
+                <h5 class="card-title">输入描述内容</h5>
+                <ul>
+                    <li>
+                        输入详细内容
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="card">
+            <img class="card-img-top" src="../images/R-C.jpg">
+            <div class="card-body">
+                <h5 class="card-title">输入描述内容</h5>
+                <ul>
+                    <li>
+                        输入详细内容
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="imgbox wow fadeInLeft animated animated animated" style="visibility: visible;">
+        <div class="img_container">
+            <div class="community_box box1 ">
+                <a href="https://www.geeksforgeeks.org/" style="text-decoration: none;" target="_blank">
+                    <img src="../images/Geeks.jpg" class="communityPartner__image" alt="">
+                </a>
+            </div>
+        </div>
+    </div>
+    <script>
+        let scalingElement = null;
+        $(document).ready(function () {
+            $('.pic').css('scale', 1);
+            $('.pic').mouseover(function () {
+                if (scalingElement) {
+                    return
+                }
+                scalingElement = this;
+                $(this).animate({ "scale": "1.2" }, 200,)
+                console.log($(this).css("scale"))
+            })
+            $('.pic').mouseout(function () {
+                $(this).animate({ "scale": "1" }, 50, function () {
+                    scalingElement = null; // 动画结束后重置变量
+                })
+                console.log($(this).css("scale"))
+            })
+        })
+    </script>
+</body>
+
+</html>

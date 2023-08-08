@@ -115,3 +115,9 @@
     top: 0px;
     width: 115px;
   }
+.intputsyle {
+  position: absolute;
+  bottom: 14px;
+  left: 59px;
+  width: 100px;
+}

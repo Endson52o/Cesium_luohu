@@ -14,4 +14,12 @@ $(document).ready(function () {
       rightWindows = "none"
     }
   })
+  $("#chaxun").click(function () {
+    var value = $("#myinput").val();
+    // 保存值到变量
+    var inputValue = value;
+    var uniqueArr = $.unique(bjNamearr);
+    console.log(uniqueArr)
+
+  })
 })

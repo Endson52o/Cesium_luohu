@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../libs/js/jquery-3.7.0.min.js"></script>
+</head>
+
+<body>
+    <button id="shuru" style="width: 50px;height: 30px;">测试</button>
+    <input id="myinput" type="text">输入查询内容
+    <script>
+        $(document).ready(function () {
+            $("#shuru").click(function () {
+                var value = $("#myinput").val();
+                // 保存值到变量
+                var inputValue = value;
+                if (inputValue == "上水井盖") {
+                    alert("Please")
+                }
+            })
+        })
+
+    </script>
+</body>
+
+</html>

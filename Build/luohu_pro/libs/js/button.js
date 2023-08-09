@@ -1,4 +1,3 @@
-var uniqueArr
 // 双屏按钮功能
 let rightWindows = $("#right-viewer").css("display");
 $(document).ready(function () {
@@ -19,13 +18,25 @@ $(document).ready(function () {
     var value = $("#myinput").val();
     // 保存值到变量
     var inputValue = value;
-    $.getJSON("../config/Point.json", function (jsonData) {
-      _bjnameFind(jsonData);
-      if (uniqueArr.indexOf(inputValue) > -1) {
-        pointType = inputValue
-        toAddbj(jsonData)
+    var url="../config/Point.json"
+    findIndex(url)
+      if(bujianList.indexOf(inputValue) > -1){
+        console.log("yes")
       }
-    })
+      else{
+        alert("输入的部件名称不存在");
+        $("#myinput").val('');
+      }
+
+
+
+    // $.getJSON("../config/Point.json", function (jsonData) {
+    //   _bjnameFind(jsonData);
+    //   if (uniqueArr.indexOf(inputValue) > -1) {
+    //     pointType = inputValue
+    //     toAddbj(jsonData)
+    //   }
+    // })
 
   })
 })

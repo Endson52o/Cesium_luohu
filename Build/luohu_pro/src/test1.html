@@ -54,10 +54,19 @@
         </div>
     </div>
     <script>
-        $(document).ready(function(){                         nTxt=$(this).html();
-                alert(n                })
-
-        })
+        // 存储ajax请求结果
+        var ajaxCache = {};
+        url1="../config/fcfh.geojson"
+        getJson(url1)
+        console.log(ajaxCache[url1])
+        function getJson(url) {
+            if (ajaxCache[url]) {
+                return ajaxCache[url];
+            } else {
+                ajaxCache[url] = $.getJSON(url);
+                return ajaxCache[url];
+            }
+        }
     </script>
 </body>
 

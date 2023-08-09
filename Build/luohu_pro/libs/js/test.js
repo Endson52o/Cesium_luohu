@@ -45,34 +45,45 @@ $(document).ready(function () {
             if (idName == "zht") {
                 imageName = "../images/csbj/zonghe.png"
             }
+            findIndex(urlData, idHtml)
         }
-        if (dataobject.chengshibujian.txtId.indexOf(idName) > -1 & idName == "dBJ") {
-            urlData = dataobject.chengshibujian.url[0];
+        if(idName=="zl"){
+            urlData = dataobject.fencfenhu.url;
+            for(var _i=0;_i<3;_i++){
+                idHtml=dataobject.fencfenhu.txtList[_i];
+                imageName=dataobject.fencfenhu.image[_i];
+                findIndex(urlData, idHtml)
+            }
         }
-        if (dataobject.chengshibujian.txtId.indexOf(idName) > -1 & idName == "xBJ") {
-            urlData = dataobject.chengshibujian.url[1];
+        if (dataobject.chengshibujian.txtId.indexOf(idName) > -1) {
+            if (idName == "dBJ") {
+                urlData = dataobject.chengshibujian.url[0];
+            }
+            if (idName == "xBJ") {
+                urlData = dataobject.chengshibujian.url[1];
+            }
+            if (idName == "mBJ") {
+                urlData = dataobject.chengshibujian.url[2];
+            }
+            findIndex(urlData, idHtml)
         }
-        if (dataobject.chengshibujian.txtId.indexOf(idName) > -1 & idName == "mBJ") {
-            urlData = dataobject.chengshibujian.url[2];
-        }
-        findIndex(urlData,idHtml)
     })
 })
-function findIndex(urlsource,idHtmlname) {
+function findIndex(urlsource, idHtmlname) {
     $.getJSON(urlsource, function (jsonData) {
         for (var list = 0; list < jsonData.features.length; list++) {
             if (urlsource == "../config/fcfh.geojson") {
                 dataPoint_longitude = jsonData.features[list].geometry.coordinates[0];
                 dataPoint_latitude = jsonData.features[list].geometry.coordinates[1];
                 objType = jsonData.features[list].properties.类型;
-                if(objType==idHtmlname){
+                if (objType == idHtmlname) {
                     objName = jsonData.features[list].properties.建筑名;
                 }
-                else{
-                    objName=null;
+                else {
+                    objName = null;
                 }
             }
-            else {
+            if(urlsource == "../config/Point.json") {
                 dataPoint_longitude = jsonData.features[list].geometry.x;
                 dataPoint_latitude = jsonData.features[list].geometry.y;
                 objType = null;
@@ -94,7 +105,7 @@ function findIndex(urlsource,idHtmlname) {
     bujianList = $.unique(bujianList);
 }
 function fenCHENG(p, n) {
-    if(objName!=null){
+    if (objName != null) {
         viewer.entities.add({
             position: p,
             billboard: {
@@ -122,5 +133,5 @@ function fenCHENG(p, n) {
             }
         })
     }
-    
+
 }

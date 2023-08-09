@@ -26,13 +26,6 @@ $(document).ready(function () {
         toAddbj(jsonData)
       }
     })
-    function _bjnameFind(_bjData) {
-      for (var _nameCount = 0; _nameCount < _bjData.features.length; _nameCount++) {
-        bjName = _bjData.features[_nameCount].attributes.OBJNAME
-        bjNamearr.push(bjName)
-      }
-      uniqueArr = $.unique(bjNamearr);
-    }
 
   })
 })

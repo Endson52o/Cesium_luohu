@@ -28,9 +28,13 @@ $(document).ready(function () {
             $("#fenchenfenhu").css("display", "none")
             $("#chenshibujian").toggle();
         }
+        if ($(this).attr('id') == "chaxun") {
+            var values = $("#myinput").val()
+
+        }
     })
     $('.btn1').click(function () {
-        basearr.splice(0, basearr.length)
+        bujianList.splice(0, bujianList.length)
         idName = $(this).attr('id')
         idHtml = $(this).html();
         if (dataobject.fencfenhu.txtId.indexOf(idName) > -1) {
@@ -71,18 +75,21 @@ function findIndex() {
                 dataPoint_latitude = jsonData.features[list].geometry.y;
                 objType = null;
                 objName = jsonData.features[list].attributes.OBJNAME;
+                bujianList.push(objName)
+                bujianList = $.unique(bujianList);
                 imageName = "../images/zonghe.png"
             }
-            var car = Cesium.Cartographic.fromDegrees(dataPoint_longitude, dataPoint_latitude);
-            var height = viewer.scene.sampleHeight(car);
-            if (height != undefined) {
-                var point_position = Cesium.Cartesian3.fromDegrees(dataPoint_longitude, dataPoint_latitude, height + 0.5);
-            }
-            else {
-                var point_position = Cesium.Cartesian3.fromDegrees(dataPoint_longitude, dataPoint_latitude, 115);
-            }
-            fenCHENG(point_position, objName)
+            // var car = Cesium.Cartographic.fromDegrees(dataPoint_longitude, dataPoint_latitude);
+            // var height = viewer.scene.sampleHeight(car);
+            // if (height != undefined) {
+            //     var point_position = Cesium.Cartesian3.fromDegrees(dataPoint_longitude, dataPoint_latitude, height + 0.5);
+            // }
+            // else {
+            //     var point_position = Cesium.Cartesian3.fromDegrees(dataPoint_longitude, dataPoint_latitude, 115);
+            // }
+            // fenCHENG(point_position, objName)
         }
+        console.log(bujianList)
     })
 }
 function fenCHENG(p, n) {

@@ -189,7 +189,7 @@ function cesium_shuangpping() {
     maximumScreenSpaceError: 64,// 数值加大，能让最终成像变模糊
     dynamicScreenSpaceError: true, // 根据测试，有了这个后，会在真正的全屏加载完之后才清晰化房屋
     maximumMemoryUsage: 512, // 内存分配变小有利于倾斜摄影数据回收，提升性能体验
-    url: 'http://10.169.3.17:9999/stdms/service/mesh/dongmen2023/tileset.json',
+    url: 'http://10.169.3.17:9999/stdms/service/mesh/luohu2021/tileset.json',
   }));
   const MOUSE_TYPE = {
     LEFT: 0,

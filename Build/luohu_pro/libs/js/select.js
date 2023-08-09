@@ -1,4 +1,4 @@
-var nSel, nTxt, imageData, urlData
+var nSel, nTxt, imageData, jsonUrldata, jsonData, pointType, pointName
 var bjNamearr = []
 var btnlist = {
     "type": "fueaturelist",
@@ -13,137 +13,60 @@ var btnlist = {
         },
         {
             "typeName": "城市部件",
-            "txtList": ["点部件", "线部件", "面部件", "总览"],
-            "txtId": ["zt", "dBJ", "xBJ", "mBJ"],
+            "txtList": ["点部件", "线部件", "面部件"],
+            "txtId": ["dBJ", "xBJ", "mBJ"],
             "url": ["../config/Point.json", "../config/Line.json", "../config/Polygon.json"]
         }
     ]
 }
 $(document).ready(function () {
-    $('button').click(function () {
+    $('.btn').click(function () {
+        viewer.entities.removeAll();
         if ($(this).attr('id') == "fenChen") {
             $("#chenshibujian").css("display", "none")
             $("#fenchenfenhu").toggle();
-            urlData = btnlist.fueatures[0].url
+            jsonUrldata = btnlist.fueatures[0].url
         }
         if ($(this).attr('id') == "BuJian") {
             $("#fenchenfenhu").css("display", "none")
             $("#chenshibujian").toggle();
         }
     })
-    $('#fenchenfenhu button').click(function () {
+    $('.btn1').click(function () {
         viewer.entities.removeAll();
         nSel = $(this).attr('id');
         nTxt = $(this).html();
-        getheight(urlData);
-    })
-    $('#chenshibujian button').click(function () {
-        if ($(this).attr('id') == "dBJ") {
-            urlData = btnlist.fueatures[1].url[0];
-        }
-        if ($(this).attr('id') == "xBJ") {
-            urlData = btnlist.fueatures[1].url[1];
-        }
-        if ($(this).attr('id') == "mBJ") {
-            urlData = btnlist.fueatures[1].url[2];
-        }
-        getbjheight(urlData);
-    })
-})
-//加载部件方法
-function getbjheight(_x) {
-    $.getJSON(_x, function (BJdata) {
-        toDobj(BJdata)
-    })
-    function toDobj(_BJdata) {
-        for (var l = 0; l < _BJdata.features.length; l++) {
-            var dataPoint_longitude = _BJdata.features[l].geometry.x;
-            var dataPoint_latitude = _BJdata.features[l].geometry.y;
-            var car = Cesium.Cartographic.fromDegrees(dataPoint_longitude, dataPoint_latitude);
-            var height = viewer.scene.sampleHeight(car);
-            if (height != undefined) {
-                var point_position = Cesium.Cartesian3.fromDegrees(dataPoint_longitude, dataPoint_latitude, height + 0.5);
-            }
-            else {
-                var point_position = Cesium.Cartesian3.fromDegrees(dataPoint_longitude, dataPoint_latitude, 115);
-            }
-            var pointName = _BJdata.features[l].attributes.OBJNAME
-            bjNamearr.push(pointName)
-            // 对数组做关键字查询
-            // var keyWord = ""
-            // if (pointName.findIndex(item => item.includes(keyWord.toString())) != -1) {
-            // }
-            //对字符串做关键字查询判断
-            // var keyWord = "井盖"
-            // if (pointName.indexOf(keyWord) > -1) {
-            //     var images = "../images/csbj/04.png"
-            // }
-            // else {
-            //     var images = "../images/zonghe.png"
-            // }
-            fenCHENGbj(point_position, pointName);
-
-        }
-    }
-}
-//加载点位方法
-function fenCHENGbj(a, b) {
-    viewer.entities.add({
-        position: a,
-        billboard: {
-            image: "../images/zonghe.png",
-            width: 25,
-            height: 25,
-        },
-        label: {
-            text: b,
-            font: '12px Arial',
-            fillColor: Cesium.Color.WHITE,
-            outlineColor: Cesium.Color.BLUE,
-            outlineWidth: 2,
-            style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-            pixelOffset: new Cesium.Cartesian2(0, -30),
-            horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
-            verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-            scaleByDistance: new Cesium.NearFarScalar(1.5e2, 1.5, 1.5e7, 0.5),
-            translucencyByDistance: new Cesium.NearFarScalar(1.5e2, 1.0, 1.5e7, 0.0),
-            labelStyle: {
-                font: 'bold 12px Arial',
-                pixelOffsetScaleByDistance: new Cesium.NearFarScalar(1.5e2, 1.5, 1.5e7, 0.5)
-            }
-        }
-    })
-
-}
-
-
-function getheight(x) {
-    var request = new XMLHttpRequest();
-    request.open("get", x);/*设置请求方法与路径*/
-    request.send(null);/*不发送数据到服务器*/
-    request.onload = function () {/*XHR对象获取到返回信息后执行*/
-        geoData = JSON.parse(request.responseText);
-        if (nSel == "zl") {
-            for (var m = 0; m < btnlist.fueatures[0].txtList.length; m++) {
-                nTxt = btnlist.fueatures[0].txtList[m];
-                imageData = btnlist.fueatures[0].image[m];
-                toDo();
-            }
-        } else {
-            for (var _cont = 0; _cont < btnlist.fueatures[0].txtId.length; _cont++) {
-                if (nSel == btnlist.fueatures[0].txtId[_cont]) {
-                    imageData = btnlist.fueatures[0].image[_cont];
-                    toDo();
+        $.getJSON(jsonUrldata, function (jsonData) {
+            if (nSel == "sy" || "xq" || "zht") {
+                for (var _cont = 0; _cont < btnlist.fueatures[0].txtId.length; _cont++) {
+                    if (nSel == btnlist.fueatures[0].txtId[_cont]) {
+                        imageData = btnlist.fueatures[0].image[_cont];
+                    }
+                    toAddfencfenhu(jsonData);
                 }
             }
+            if (nSel == "zl") {
+                for (var m = 0; m < btnlist.fueatures[0].txtList.length; m++) {
+                    nTxt = btnlist.fueatures[0].txtList[m];
+                    imageData = btnlist.fueatures[0].image[m];
+                    toAddfencfenhu(jsonData);
+                }
+            }
+        })
+        if (nSel == "dBJ") {
+            imageData = "../images/zonghe.png";
+            jsonUrldata = "../config/Point.json";
+            $.getJSON(jsonUrldata, function (jsonData) {
+                toAddbj(jsonData);
+            })
         }
-    }
-}
+    })
+})
 //遍历Json文件
-function toDo() {
-    for (var i = 0; i < geoData.features.length; i++) {
-        var dataPoint_longitude = geoData.features[i].geometry.coordinates[0];
-        var dataPoint_latitude = geoData.features[i].geometry.coordinates[1];
+function toAddfencfenhu(x) {
+    for (var i = 0; i < x.features.length; i++) {
+        var dataPoint_longitude = x.features[i].geometry.coordinates[0];
+        var dataPoint_latitude = x.features[i].geometry.coordinates[1];
         var car = Cesium.Cartographic.fromDegrees(dataPoint_longitude, dataPoint_latitude);
         var height = viewer.scene.sampleHeight(car);
         if (height != undefined) {
@@ -152,14 +75,43 @@ function toDo() {
         else {
             var point_position = Cesium.Cartesian3.fromDegrees(dataPoint_longitude, dataPoint_latitude, 115);
         }
-        var pointType = geoData.features[i].properties.类型
-        var pointName = geoData.features[i].properties.建筑名称
+        pointType = x.features[i].properties.类型
+        pointName = x.features[i].properties.建筑名称
+        fenCHENG(point_position, pointName);
+    }
+}
+function toAddbj(y) {
+    for (var l = 0; l < y.features.length; l++) {
+        var dataPoint_longitude = y.features[l].geometry.x;
+        var dataPoint_latitude = y.features[l].geometry.y;
+            var car = Cesium.Cartographic.fromDegrees(dataPoint_longitude, dataPoint_latitude);
+            var height = viewer.scene.sampleHeight(car);
+            if (height != undefined) {
+                var point_position = Cesium.Cartesian3.fromDegrees(dataPoint_longitude, dataPoint_latitude, height + 0.5);
+            }
+            else {
+                var point_position = Cesium.Cartesian3.fromDegrees(dataPoint_longitude, dataPoint_latitude, 115);
+            }
+        pointType = nTxt;
+        pointName = y.features[l].attributes.OBJNAME
+        // bjNamearr.push(pointName)
+        // var uniqueArr = $.unique(bjNamearr);
+        // 对数组做关键字查询
+        // var keyWord = ""
+        // if (pointName.findIndex(item => item.includes(keyWord.toString())) != -1) {
+        // }
+        //对字符串做关键字查询判断
+        // var keyWord = "井盖"
+        // if (pointName.indexOf(keyWord) > -1) {
+        //     var images = "../images/csbj/04.png"
+        // }
+        // else {
+        //     var images = "../images/zonghe.png"
+        // }
         fenCHENG(point_position, pointType, pointName);
     }
 }
-
-function fenCHENG(z, q, l) {
-    if (q == nTxt) {
+function fenCHENG(z, l) {
         viewer.entities.add({
             position: z,
             billboard: {
@@ -187,4 +139,3 @@ function fenCHENG(z, q, l) {
             }
         })
     }
-}

@@ -1,7 +1,7 @@
-var xiaoquarr = []
-var shanyearr = []
-var zonghetarr = []
-var pointarr = []
+var idName, urlData, imageName, idHtml, jsonData, dataPoint_longitude, dataPoint_latitude, objType, objName, idjsonHtml, urlfenchenDatasource
+var basearr = []
+var fenchenList = []
+var bujianList = []
 var dataobject = {
     "fencfenhu": {
         "txtList": ["商业楼宇", "小区住宅", "大型商业综合体"],
@@ -17,73 +17,49 @@ var dataobject = {
     }
 }
 $(document).ready(function () {
-    // 获取数据的函数
-    function fetchData(urlsource) {
-        return new Promise((resolve, reject) => {
-            $.getJSON(urlsource, (data) => {
-                resolve(data);
-            });
-        });
-    }
-    // 使用数据的函数
-    async function useData(urlname) {
-        const getjsonData = await fetchData(urlname);
-        for (var i = 0; i < getjsonData.features.length; i++) {
-            var jsondataobject = getjsonData.features[i]
-            var fenchenName = getjsonData.features[i].properties.类型
-            if (urlname == "../config/fcfh2.geojson") {
-                pointarr.push(jsondataobject)
-            }
-            if (urlname == "../config/fcfh2.geojson") {
-                if (fenchenName == "小区住宅") {
-                    xiaoquarr.push(jsondataobject)
-                }
-                if (fenchenName == "商业楼宇") {
-                    shanyearr.push(jsondataobject)
-                }
-                if (fenchenName == "大型商业综合体") {
-                    zonghetarr.push(jsondataobject)
-                }
-            }
-        }
-        console.log(jsondataobject)
-        console.log(xiaoquarr)
-        console.log(shanyearr)
-        console.log(zonghetarr)
-    }
+
     $('.btn').click(function () {
+        viewer.entities.removeAll();
         if ($(this).attr('id') == "fenChen") {
             $("#chenshibujian").css("display", "none")
             $("#fenchenfenhu").toggle();
-            urlsource = "../config/fcfh2.geojson"
-            useData(urlsource);
+            urlData = dataobject.fencfenhu.url
+            $.getJSON(urlData, function (jsonData) {
+                this.urlfenchenDatasource = jsonData
+            })
+            console.log(this.urlfenchenDatasource)
         }
         if ($(this).attr('id') == "BuJian") {
             $("#fenchenfenhu").css("display", "none")
             $("#chenshibujian").toggle();
-            urlsource = "../config/Point.json"
-            useData(urlsource);
         }
+
     })
-    $(".btn1").click(function () {
+    $('.btn1').click(function () {
+        viewer.entities.removeAll();
+        bujianList.splice(0, bujianList.length)
         idName = $(this).attr('id')
         idHtml = $(this).html();
-        if (idName == "sy") {
-            imageName = "../images/csbj/shanye.png"
-        }
-        if (idName == "xq") {
-            imageName = "../images/csbj/zhuzhai.png"
-        }
-        if (idName == "zht") {
-            imageName = "../images/csbj/zonghe.png"
-        }
-    })
-    if (idName == "zl") {
+        if (dataobject.fencfenhu.txtId.indexOf(idName) > -1) {
             urlData = dataobject.fencfenhu.url;
-        for (var _i = 0; _i < dataobject.fencfenhu.txtId.length; _i++) {
-            idHtml = dataobject.fencfenhu.txtList[_i];
-            imageName = dataobject.fencfenhu.image[_i];
-            findIndex(json, idHtml, imageName)
+            if (idName == "sy") {
+                imageName = "../images/csbj/shanye.png"
+            }
+            if (idName == "xq") {
+                imageName = "../images/csbj/zhuzhai.png"
+            }
+            if (idName == "zht") {
+                imageName = "../images/csbj/zonghe.png"
+            }
+            findIndex(jsonData, idHtml, imageName)
+
+        }
+        if (idName == "zl") {
+            urlData = dataobject.fencfenhu.url;
+            for (var _i = 0; _i < dataobject.fencfenhu.txtId.length; _i++) {
+                idHtml = dataobject.fencfenhu.txtList[_i];
+                imageName = dataobject.fencfenhu.image[_i];
+                findIndex(urlData, idHtml, imageName)
             }
         }
         if (dataobject.chengshibujian.txtId.indexOf(idName) > -1) {
@@ -99,9 +75,10 @@ $(document).ready(function () {
             }
             $.getJSON(urlsource, function (jsonData) {
             })
-        findIndex(json, idHtml, imageName)
-    }
+            findIndex(jsonData, idHtml, imageName)
+        }
 
+    })
 })
 function findIndex(urlsource, idHtmlname, imageNames) {
     for (var list = 0; list < jsonData.features.length; list++) {

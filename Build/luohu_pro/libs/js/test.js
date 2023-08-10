@@ -1,7 +1,4 @@
-var xiaoquarr = []
-var shanyearr = []
-var zonghetarr = []
-var pointarr = []
+var dataPoint_longitude,dataPoint_latitude,objName,point_position,fenchenurlsource,bjurlsource
 var dataobject = {
     "fencfenhu": {
         "txtList": ["商业楼宇", "小区住宅", "大型商业综合体"],
@@ -27,118 +24,121 @@ $(document).ready(function () {
     }
     // 使用数据的函数
     async function useData(urlname) {
+        window.xiaoquarr = []
+        window.shanyearr = []
+        window.zonghetarr = []
+        window.pointarr = []
+        window.pointnamearr = []
         const getjsonData = await fetchData(urlname);
         for (var i = 0; i < getjsonData.features.length; i++) {
             var jsondataobject = getjsonData.features[i]
-            var fenchenName = getjsonData.features[i].properties.类型
-            if (urlname == "../config/fcfh2.geojson") {
-                pointarr.push(jsondataobject)
+            if (dataobject.chengshibujian.url.indexOf(urlname) > -1) {
+                    window.pointarr.push(jsondataobject)
+                    var bjNames = window.pointarr[i].attributes.OBJNAME
+                    window.pointnamearr.push(bjNames)
+                    window.pointnamearr = $.unique(window.pointnamearr)
             }
             if (urlname == "../config/fcfh2.geojson") {
+                var fenchenName = getjsonData.features[i].properties.类型
                 if (fenchenName == "小区住宅") {
-                    xiaoquarr.push(jsondataobject)
+                    window.xiaoquarr.push(jsondataobject)
                 }
                 if (fenchenName == "商业楼宇") {
-                    shanyearr.push(jsondataobject)
+                    window.shanyearr.push(jsondataobject)
                 }
                 if (fenchenName == "大型商业综合体") {
-                    zonghetarr.push(jsondataobject)
+                    window.zonghetarr.push(jsondataobject)
                 }
             }
         }
-        console.log(jsondataobject)
-        console.log(xiaoquarr)
-        console.log(shanyearr)
-        console.log(zonghetarr)
     }
     $('.btn').click(function () {
+        viewer.entities.removeAll();
         if ($(this).attr('id') == "fenChen") {
             $("#chenshibujian").css("display", "none")
             $("#fenchenfenhu").toggle();
-            urlsource = "../config/fcfh2.geojson"
-            useData(urlsource);
+            fenchenurlsource = "../config/fcfh2.geojson"
+            useData(fenchenurlsource);
         }
         if ($(this).attr('id') == "BuJian") {
             $("#fenchenfenhu").css("display", "none")
             $("#chenshibujian").toggle();
-            urlsource = "../config/Point.json"
-            useData(urlsource);
+            for(var _bj=0;_bj<dataobject.chengshibujian.url;_bj++){
+                bjurlsource = dataobject.chengshibujian.url[_bj]
+                useData(bjurlsource);
+            }
         }
     })
     $(".btn1").click(function () {
-        idName = $(this).attr('id')
-        idHtml = $(this).html();
-        if (idName == "sy") {
-            imageName = "../images/csbj/shanye.png"
-        }
-        if (idName == "xq") {
-            imageName = "../images/csbj/zhuzhai.png"
-        }
-        if (idName == "zht") {
-            imageName = "../images/csbj/zonghe.png"
-        }
-    })
-    if (idName == "zl") {
-            urlData = dataobject.fencfenhu.url;
-        for (var _i = 0; _i < dataobject.fencfenhu.txtId.length; _i++) {
-            idHtml = dataobject.fencfenhu.txtList[_i];
-            imageName = dataobject.fencfenhu.image[_i];
+        viewer.entities.removeAll();
+        var idName = $(this).attr('id')
+
+        if (dataobject.fencfenhu.txtId.indexOf(idName) > -1) {
+            var idHtml=fenchenurlsource
+            if (idName == "sy") {
+                var json =window.shanyearr
+                imageName = "../images/csbj/shanye.png"
+            }
+            if (idName == "xq") {
+                imageName = "../images/csbj/zhuzhai.png"
+                var json =window.xiaoquarr
+            }
+            if (idName == "zht") {
+                imageName = "../images/csbj/zonghe.png"
+                var json =window.zonghetarr
+            }
             findIndex(json, idHtml, imageName)
+        }
+        if (idName == "zl") {
+            var idHtml=fenchenurlsource
+            for (var _i = 0; _i < dataobject.fencfenhu.txtId.length; _i++) {
+                imageName = dataobject.fencfenhu.image[_i];
+                json=[window.shanyearr,window.xiaoquarr,window.zonghetarr]
+                findIndex(json[_i], idHtml, imageName)
             }
         }
         if (dataobject.chengshibujian.txtId.indexOf(idName) > -1) {
-            imageNames = "../images/zonghe.png"
+            var idHtml = bjurlsource
+            imageName = "../images/zonghe.png"
             if (idName == "dBJ") {
-                urlData = dataobject.chengshibujian.url[0];
+                bjurlsource = dataobject.chengshibujian.url[0];
             }
             if (idName == "xBJ") {
-                urlData = dataobject.chengshibujian.url[1];
+                bjurlsource = dataobject.chengshibujian.url[1];
             }
             if (idName == "mBJ") {
-                urlData = dataobject.chengshibujian.url[2];
+                bjurlsource = dataobject.chengshibujian.url[2];
             }
-            $.getJSON(urlsource, function (jsonData) {
-            })
-        findIndex(json, idHtml, imageName)
-    }
-
-})
-function findIndex(urlsource, idHtmlname, imageNames) {
-    for (var list = 0; list < jsonData.features.length; list++) {
-        if (urlsource == "../config/fcfh2.geojson") {
-            dataPoint_longitude = jsonData.features[list].geometry.coordinates[0];
-            dataPoint_latitude = jsonData.features[list].geometry.coordinates[1];
-            objType = jsonData.features[list].properties.类型;
-            if (objType == idHtmlname) {
-                objName = jsonData.features[list].properties.建筑名;
-                bujianList.push(objName)
-            }
-            if (objType != idHtmlname) {
-                objName = null;
-            }
+            findIndex(bjurlsource, idHtml, imageName)
+            console.log(window.pointarr)
         }
-        if (urlsource == "../config/Point.json") {
+    })
+})
+function findIndex(jsonData, idHtmlname, imageNames) {
+    for (var list = 0; list < jsonData.length; list++) {
+        if (idHtmlname == "../config/fcfh2.geojson") {
+            dataPoint_longitude = jsonData[list].geometry.coordinates[0];
+            dataPoint_latitude = jsonData[list].geometry.coordinates[1];
+            objName=jsonData[list].properties.建筑名称
+        }
+        if (idHtmlname == "../config/Point.json") {
             dataPoint_longitude = jsonData.features[list].geometry.x;
             dataPoint_latitude = jsonData.features[list].geometry.y;
-            objName = jsonData.features[list].attributes.OBJNAME;
-            bujianList.push(objName)
+            objName=jsonData.features[list].properties.建筑名称
         }
         var car = Cesium.Cartographic.fromDegrees(dataPoint_longitude, dataPoint_latitude);
         var height = viewer.scene.sampleHeight(car);
         if (height != undefined) {
-            var point_position = Cesium.Cartesian3.fromDegrees(dataPoint_longitude, dataPoint_latitude, height + 0.5);
+            point_position = Cesium.Cartesian3.fromDegrees(dataPoint_longitude, dataPoint_latitude, height + 0.5);
         }
         else {
-            var point_position = Cesium.Cartesian3.fromDegrees(dataPoint_longitude, dataPoint_latitude, 115);
+            point_position = Cesium.Cartesian3.fromDegrees(dataPoint_longitude, dataPoint_latitude, 115);
         }
 
         fenCHENG(point_position, objName, imageNames)
     }
-    console.log(bujianList)
-    console.log(objName)
 }
 function fenCHENG(p, n, images) {
-    if (objName != null) {
         viewer.entities.add({
             position: p,
             billboard: {
@@ -165,6 +165,4 @@ function fenCHENG(p, n, images) {
                 }
             }
         })
-    }
-
 }

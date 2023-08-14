@@ -3,9 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="../libs/js/jquery-3.7.0.min.js"></script>
+    <script src="../libs/CesiumUnminified/Cesium.js"></script>
+    <link href="../libs/CesiumUnminified/Widgets/widgets.css" rel="stylesheet">
     <link href="../libs/css/cesium_hex.css" rel="stylesheet">
 </head>
 <style>
@@ -22,107 +25,92 @@
 </style>
 
 <body>
-    <div id="button" style="top:0;width:60px;height:100%;position:absolute;z-index:1;">
-        <div>
-            <button id="cesium_home_button" class="btn" style="top: -5px;" onclick="cesium_home()">首页</button>
-        </div>
-        <div>
-            <button id="cesium_shuanping_button" class="btn" style="top: 30px;">双屏</button>
-        </div>
-        <div>
-            <button id="cesium_roll_button" class="btn" style="top: 65px;" onclick="roll_test()">绕飞</button>
-        </div>
-        <div>
-            <button id="fenChen" class="btn" style="top: 100px;">分层分户</button>
-            <div id="fenchenfenhu" class="list">
-                <button id="zl" class="btn1">总览</button>
-                <button id="xq" class="btn1" style="top: 20px;">小区住宅</button>
-                <button id="sy" class="btn1" style="top: 40px;">商业楼宇</button>
-                <button id="zht" class="btn1" style="top: 60px;">大型商业综合体</button>
+    <div id="cesiumContainer1" class="cesiumWindows">
+        <div id="button" style="top:0;width:60px;height:100%;position:absolute;z-index:1;">
+            <div>
+                <button id="cesium_home_button" class="btn" style="top: -5px;" onclick="cesium_home()">首页</button>
             </div>
-        </div>
-        <div>
-            <button id="BuJian" class="btn" style="top: 135px;">城市部件</button>
-            <div id="chenshibujian" class="list" style="top:150px">
-                <button id="zt" class="btn1">总体</button>
-                <button id="dBJ" class="btn1" style="top: 20px;">点部件</button>
-                <button id="xBJ" class="btn1" style="top: 40px;">线部件</button>
-                <button id="mBJ" class="btn1" style="top: 60px;">面部件</button>
+            <div>
+                <button id="cesium_shuanping_button" class="btn" style="top: 30px;">双屏</button>
             </div>
-            <input id="myinput" class="intputsyle" type="text">
-            <button id="chaxun" class="btn" style=" bottom: 0px;">查询</button>
+            <div>
+                <button id="cesium_roll_button" class="btn" style="top: 65px;" onclick="roll_test()">绕飞</button>
+            </div>
+            <div>
+                <button id="fenChen" class="btn" style="top: 100px;">分层分户</button>
+                <div id="fenchenfenhu" class="list">
+                    <button id="zl" class="btn1">总览</button>
+                    <button id="xq" class="btn1" style="top: 20px;">小区住宅</button>
+                    <button id="sy" class="btn1" style="top: 40px;">商业楼宇</button>
+                    <button id="zht" class="btn1" style="top: 60px;">大型商业综合体</button>
+                </div>
+            </div>
+            <div>
+                <button id="BuJian" class="btn" style="top: 135px;">城市部件</button>
+                <div id="chenshibujian" class="list" style="top:150px">
+                    <button id="zt" class="btn1">总体</button>
+                    <button id="dBJ" class="btn1" style="top: 20px;">点部件</button>
+                    <button id="xBJ" class="btn1" style="top: 40px;">线部件</button>
+                    <button id="mBJ" class="btn1" style="top: 60px;">面部件</button>
+                </div>
+                <input id="myinput" class="intputsyle" type="text">
+                <button id="chaxun" class="btn" style=" bottom: 0px;">查询</button>
+            </div>
         </div>
     </div>
     <script>
-        var xiaoquarr = []
-        var shanyearr = []
-        var zonghetarr = []
         $(document).ready(function () {
-            // 获取数据的函数
-            function fetchData(urlsource) {
-                return new Promise((resolve, reject) => {
-                    $.getJSON(urlsource, (data) => {
-                        resolve(data);
-                    });
-                });
-            }
-            // 使用数据的函数
-            async function useData(urlname) {
-
-                const getjsonData = await fetchData(urlname);
-                for (var i = 0; i < getjsonData.features.length; i++) {
-                    var fenchenName = getjsonData.features[i].properties.类型
-                    var fenchenData = getjsonData.features[i]
-                    if (fenchenName == "小区住宅") {
-                        xiaoquarr.push(fenchenData)
-                    }
-                    if (fenchenName == "商业楼宇") {
-                        shanyearr.push(fenchenData)
-                    }
-                    if (fenchenName == "大型商业综合体") {
-                        zonghetarr.push(fenchenData)
-                    }
-                }
-                // console.log(xiaoquarr)
-                // console.log(shanyearr)
-                // console.log(zonghetarr)
-            }
             $('.btn').click(function () {
+                viewer.entities.removeAll();
                 if ($(this).attr('id') == "fenChen") {
                     $("#chenshibujian").css("display", "none")
                     $("#fenchenfenhu").toggle();
-                    urlsource = "../config/fcfh2.geojson"
-                    useData(urlsource);
+                    fenchenurlsource = "../config/fcfh.geojson"
                 }
                 if ($(this).attr('id') == "BuJian") {
                     $("#fenchenfenhu").css("display", "none")
                     $("#chenshibujian").toggle();
-                    useData();
-
                 }
-
             })
             $(".btn1").click(function () {
-                idName = $(this).attr('id')
-                idHtml = $(this).html();
-                if (idName == "sy") {
-                    imageName = "../images/csbj/shanye.png"
-                    console.log(imageName)
-                    console.log(shanyearr[0].properties.建筑名称)
+                viewer.entities.removeAll();
+                var idName = $(this).attr('id')
+                url = ["../config/Point.json", "../config/Line.json", "../config/Polygon.json"]
+                imageName = "../images/zonghe.png"
+                if (idName == "dBJ") {
+                    bjurlsource = url[0]
                 }
-                if (idName == "xq") {
-                    imageName = "../images/csbj/zhuzhai.png"
-                    console.log(imageName)
-                    console.log(xiaoquarr)
+                if (idName == "xBJ") {
+                    bjurlsource = url[1];
                 }
-                if (idName == "zht") {
-                    imageName = "../images/csbj/zonghe.png"
-                    console.log(imageName)
-                    console.log(zonghetarr)
+                if (idName == "mBJ") {
+                    bjurlsource = url[2];
+                }
+                $.getJSON(bjurlsource, function (data) {
+                    var jsonData = data
+
+                    for (var list = 0; list < jsonData.features.length; list++) {
+                        var point_position = jsonData.features[list].geometry.paths
+                        var objName = jsonData.features[list].attributes.OBJNAME
+                        console.log(point_position)
+                        addLine(point_position, objName)
+                    }
+                })
+                function addLine(_p, _n) {
+                    viewer.entities.add({
+                        name: _n,
+                        polyline: {
+                            positions: _p,
+                            width: 5,
+                            material: Cesium.Color.RED,
+                            clampToGround: true,
+                        }
+                    })
                 }
             })
-        })  
+        })
     </script>
 </body>
+<script src="../libs/js/main.js"></script>
 
 </html>

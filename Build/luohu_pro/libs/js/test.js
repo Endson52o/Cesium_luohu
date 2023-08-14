@@ -4,7 +4,7 @@ var dataobject = {
         "txtList": ["商业楼宇", "小区住宅", "大型商业综合体"],
         "txtId": ["sy", "xq", "zht"],
         "image": ["../images/csbj/shanye.png", "../images/csbj/zhuzhai.png", "../images/csbj/zonghe.png"],
-        "url": "../config/fcfh2.geojson"
+        "url": "../config/fcfh.geojson"
     },
     "chengshibujian": {
         "txtList": ["点部件", "线部件", "面部件"],
@@ -34,11 +34,11 @@ $(document).ready(function () {
         window.Linetnamearr=[]
         window.Polygonobjarr=[]
         window.Polygonnamearr=[]
-        if (urlname == "../config/fcfh2.geojson") {
+        if (urlname == "../config/fcfh.geojson") {
             const getjsonData = await fetchData(urlname);
             for (var i = 0; i < getjsonData.features.length; i++) {
                 var jsondataobject = getjsonData.features[i]
-                if (urlname == "../config/fcfh2.geojson") {
+                if (urlname == "../config/fcfh.geojson") {
                     var fenchenName = getjsonData.features[i].properties.类型
                     if (fenchenName == "小区住宅") {
                         window.xiaoquarr.push(jsondataobject)
@@ -75,9 +75,7 @@ $(document).ready(function () {
                     }
                 }
             }
-            console.log(Pointnamearr)
-            console.log(Linetnamearr)
-            console.log(Polygonnamearr)
+
         }
     }
     $('.btn').click(function () {
@@ -85,7 +83,7 @@ $(document).ready(function () {
         if ($(this).attr('id') == "fenChen") {
             $("#chenshibujian").css("display", "none")
             $("#fenchenfenhu").toggle();
-            fenchenurlsource = "../config/fcfh2.geojson"
+            fenchenurlsource = "../config/fcfh.geojson"
             useData(fenchenurlsource);
         }
         if ($(this).attr('id') == "BuJian") {
@@ -123,34 +121,38 @@ $(document).ready(function () {
             }
         }
         if (dataobject.chengshibujian.txtId.indexOf(idName) > -1) {
-            var idHtml = bjurlsource
+            var idHtml = dataobject.chengshibujian.url
             imageName = "../images/zonghe.png"
             if (idName == "dBJ") {
-                bjurlsource = dataobject.chengshibujian.url[0];
+                bjurlsource = Piontobjarr;
             }
             if (idName == "xBJ") {
-                bjurlsource = dataobject.chengshibujian.url[1];
+                bjurlsource = Lineobjarr;
             }
             if (idName == "mBJ") {
-                bjurlsource = dataobject.chengshibujian.url[2];
+                bjurlsource = Polygonobjarr;
             }
-            // findIndex(bjurlsource, idHtml, imageName)
+            findIndex(bjurlsource, idHtml, imageName)
         }
     })
-
 })
 function findIndex(jsonData, idHtmlname, imageNames) {
     for (var list = 0; list < jsonData.length; list++) {
-        if (idHtmlname == "../config/fcfh2.geojson") {
+        if (idHtmlname == "../config/fcfh.geojson") {
             dataPoint_longitude = jsonData[list].geometry.coordinates[0];
             dataPoint_latitude = jsonData[list].geometry.coordinates[1];
             objName = jsonData[list].properties.建筑名称
         }
-        if (idHtmlname == "../config/Point.json") {
-            dataPoint_longitude = jsonData.features[list].geometry.x;
-            dataPoint_latitude = jsonData.features[list].geometry.y;
-            objName = jsonData.features[list].properties.建筑名称
+        if (jsonData == Piontobjarr) {
+            dataPoint_longitude = jsonData[list].geometry.x;
+            dataPoint_latitude = jsonData[list].geometry.y;
+            objName = jsonData[list].attributes.OBJNAME
         }
+        // if (jsonData == Lineobjarr) {
+        //     point_position = jsonData[list].geometry.paths
+        //     objName = jsonData[list].attributes.OBJNAME
+        //     addLine(point_position, objName)
+        // }
         var car = Cesium.Cartographic.fromDegrees(dataPoint_longitude, dataPoint_latitude);
         var height = viewer.scene.sampleHeight(car);
         if (height != undefined) {
@@ -159,11 +161,11 @@ function findIndex(jsonData, idHtmlname, imageNames) {
         else {
             point_position = Cesium.Cartesian3.fromDegrees(dataPoint_longitude, dataPoint_latitude, 115);
         }
+        addPoint(point_position, objName, imageNames)
 
-        fenCHENG(point_position, objName, imageNames)
     }
 }
-function fenCHENG(p, n, images) {
+function addPoint(p, n, images) {
     viewer.entities.add({
         position: p,
         billboard: {
@@ -191,3 +193,15 @@ function fenCHENG(p, n, images) {
         }
     })
 }
+function addLine(_p, _n) {
+    viewer.entities.add({
+        name: _n,
+        polyline: {
+            positions: _p,
+            width: 5,
+            material: Cesium.Color.RED,
+            clampToGround: true,
+        }
+    })
+}
+

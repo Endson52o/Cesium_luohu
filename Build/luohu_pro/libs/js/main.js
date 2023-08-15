@@ -28,9 +28,9 @@ var tileset1 = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
   dynamicScreenSpaceError: true, // 根据测试，有了这个后，会在真正的全屏加载完之后才清晰化房屋
   maximumMemoryUsage: 512, // 内存分配变小有利于倾斜摄影数据回收，提升性能体验
 
-  // url:'http://10.169.3.17:9999/stdms/service/mesh/luohu2021/tileset.json',
-  // url: 'http://10.169.3.15:8088/gw/Production_2_osgb-3dtiles/tileset.json'
-  url: 'http://localhost:8005/Data/SG_3dtiles/tileset.json'
+  // url: 'http://10.169.3.17:9999/stdms/service/mesh/luohu2021/tileset.json',
+  url: 'http://10.169.3.15:8088/gw/Production_2_osgb-3dtiles/tileset.json'
+  // url: 'http://localhost:8005/Data/SG_3dtiles/tileset.json'
 }));
 viewer.scene.primitives.add(tileset1);
 start_test();

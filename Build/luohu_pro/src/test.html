@@ -77,35 +77,24 @@
                 var idName = $(this).attr('id')
                 url = ["../config/Point.json", "../config/Line.json", "../config/Polygon.json"]
                 imageName = "../images/zonghe.png"
-                if (idName == "dBJ") {
-                    bjurlsource = url[0]
-                }
                 if (idName == "xBJ") {
-                    bjurlsource = url[1];
+                    // 创建一个GeoJSON数据源
+                    var geoJsonDataSource = new Cesium.GeoJsonDataSource();
+
+                    // 加载GeoJSON数据文件
+                    geoJsonDataSource.load('../config/test1.geojson')
+                    const entities = geoJsonDataSource.entities.values;
+                    const pointEntity = entities.find(e => e instanceof Cesium.PointGraphics);
+                    const pointCoord = pointEntity.position.getValue();
+                    console.log(pointCoord)
+                    // console.log(entities)
+                    // entities.forEach(entity => {
+                    //     const coordinates = entity.position.getValue(Cesium.JulianDate.now());
+                    //     console.log(coordinates)
+
                 }
                 if (idName == "mBJ") {
                     bjurlsource = url[2];
-                }
-                $.getJSON(bjurlsource, function (data) {
-                    var jsonData = data
-
-                    for (var list = 0; list < jsonData.features.length; list++) {
-                        var point_position = jsonData.features[list].geometry.paths
-                        var objName = jsonData.features[list].attributes.OBJNAME
-                        console.log(point_position)
-                        addLine(point_position, objName)
-                    }
-                })
-                function addLine(_p, _n) {
-                    viewer.entities.add({
-                        name: _n,
-                        polyline: {
-                            positions: _p,
-                            width: 5,
-                            material: Cesium.Color.RED,
-                            clampToGround: true,
-                        }
-                    })
                 }
             })
         })

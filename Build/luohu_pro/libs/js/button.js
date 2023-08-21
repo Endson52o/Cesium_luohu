@@ -14,6 +14,17 @@ $(document).ready(function () {
       rightWindows = "none"
     }
   })
+  $('.btn').click(function () {
+    viewer.entities.removeAll();
+    if ($(this).attr('id') == "fenChen") {
+      $("#chenshibujian").css("display", "none")
+      $("#fenchenfenhu").toggle();
+    }
+    if ($(this).attr('id') == "BuJian") {
+      $("#fenchenfenhu").css("display", "none")
+      $("#chenshibujian").toggle();
+    }
+  })
   $("#chaxun").click(function () {
     var value = $("#myinput").val();
     // 保存值到变量
@@ -27,16 +38,5 @@ $(document).ready(function () {
         alert("输入的部件名称不存在");
         $("#myinput").val('');
       }
-
-
-
-    // $.getJSON("../config/Point.json", function (jsonData) {
-    //   _bjnameFind(jsonData);
-    //   if (uniqueArr.indexOf(inputValue) > -1) {
-    //     pointType = inputValue
-    //     toAddbj(jsonData)
-    //   }
-    // })
-
   })
 })

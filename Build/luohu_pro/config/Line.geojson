@@ -1,8 +1,132 @@
 {
-"type": "FeatureCollection",
-"name": "Line",
-"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
-"features": [
-
-]
+    "type": "FeatureCollection",
+    "name": "test",
+    "crs": {
+        "type": "name",
+        "properties": {
+            "name": "urn:ogc:def:crs:EPSG::4326"
+        }
+    },
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "OBJECTID": 1,
+                "OBJCODE": "4403030217000078",
+                "OBJNAME": "交通护栏",
+                "DEPTCODE1": "4403030044",
+                "DEPTNAME1": "深圳市交通运输局",
+                "DEPTCODE2": "4403030044",
+                "DEPTNAME2": "深圳市交通运输局",
+                "DEPTCODE3": "4403030044",
+                "DEPTNAME3": "深圳市交通运输局",
+                "BGCODE": "440303004009",
+                "OBJSTATE": "完好",
+                "ORDATE": "2023-06-17",
+                "CHDATE": null,
+                "DATASOURCE": "实测",
+                "PICTURE": "\\图片\\(0217)交通护栏\\02-17-4403030217000078-01.JPG",
+                "OBJPOS": "广东省深圳市罗湖区东门街道城景中心大厦附近34米",
+                "MATERIAL": "铁质",
+                "NOTE_": "花场社区",
+                "OBJDL": "交通设施",
+                "OBJXL": "交通护栏",
+                "OBJDLBM": "02",
+                "OBJXLBM": "17",
+                "OBJSHAPE": null,
+                "GUID_": "AA43C5B8-9D53-4846-8950-5D79FE803ADF",
+                "ADDRESS": "广东省深圳市罗湖区人民北路 3085-1号西北约26米",
+                "IMAGE_": null,
+                "YJIMAGE": "\\图片\\(0217)交通护栏\\02-17-4403030217000078-01.JPG",
+                "CST": null,
+                "BMT": null,
+                "Shape_Leng": 35.1959895966
+            },
+            "geometry": {
+                "type": "MultiLineString",
+                "coordinates": [
+                    [
+                        [
+                            114.11562983044584,
+                            22.556830718121009
+                        ],
+                        [
+                            114.115600787991724,
+                            22.556514033862676
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "OBJECTID": 119,
+                "OBJCODE": "4403032117000045",
+                "OBJNAME": "其它护栏",
+                "DEPTCODE1": "4403030009",
+                "DEPTNAME1": "深圳市罗湖区城市管理和综合执法局",
+                "DEPTCODE2": "4403030009",
+                "DEPTNAME2": "深圳市罗湖区城市管理和综合执法局",
+                "DEPTCODE3": "4403030009",
+                "DEPTNAME3": "深圳市罗湖区城市管理和综合执法局",
+                "BGCODE": "440303004005",
+                "OBJSTATE": "完好",
+                "ORDATE": "2023-04-29",
+                "CHDATE": null,
+                "DATASOURCE": "实测",
+                "PICTURE": "\\图片\\(2117)其它护栏\\21-17-4403032117000045-01.JPG",
+                "OBJPOS": "广东省深圳市罗湖区东门街道深圳市人民医院(第一门诊部)",
+                "MATERIAL": "铁质",
+                "NOTE_": "东门社区",
+                "OBJDL": "扩展部件",
+                "OBJXL": "其它护栏",
+                "OBJDLBM": "21",
+                "OBJXLBM": "17",
+                "OBJSHAPE": null,
+                "GUID_": "C9D52A1B-DD31-4D86-8BA4-F0735DFF6243",
+                "ADDRESS": "广东省深圳市罗湖区深南东路  3040号东南约12米",
+                "IMAGE_": null,
+                "YJIMAGE": "\\图片\\(2117)其它护栏\\21-17-4403032117000045-01.JPG",
+                "CST": null,
+                "BMT": "\\图片\\(2117)其它护栏\\21-17-4403032117000045-02.JPG",
+                "Shape_Leng": 22.635175669700001
+            },
+            "geometry": {
+                "type": "MultiLineString",
+                "coordinates": [
+                    [
+                        [
+                            114.110716510023892,
+                            22.545931320376031
+                        ],
+                        [
+                            114.110734780181232,
+                            22.545840069807721
+                        ],
+                        [
+                            114.110742529737834,
+                            22.54580520015422
+                        ],
+                        [
+                            114.110745510087682,
+                            22.545795039878211
+                        ],
+                        [
+                            114.110759269518425,
+                            22.545762500428147
+                        ],
+                        [
+                            114.11076990974658,
+                            22.5457439899447
+                        ],
+                        [
+                            114.110773840033715,
+                            22.545735209752337
+                        ]
+                    ]
+                ]
+            }
+        }
+    ]
 }

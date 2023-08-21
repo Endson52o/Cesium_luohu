@@ -1,4 +1,4 @@
-// document.write("<script language=javascript src='../libs/CesiumUnminified/js/button.js'></script>");
+
 var viewer = new Cesium.Viewer("cesiumContainer1", {
   animation: false,//动画小部件
   baseLayerPicker: true,//地图图层组件
@@ -190,6 +190,7 @@ function cesium_shuangpping() {
     dynamicScreenSpaceError: true, // 根据测试，有了这个后，会在真正的全屏加载完之后才清晰化房屋
     maximumMemoryUsage: 512, // 内存分配变小有利于倾斜摄影数据回收，提升性能体验
     url: 'http://10.169.3.17:9999/stdms/service/mesh/luohu2021/tileset.json',
+    // url: 'http://localhost:8005/Data/SG_3dtiles/tileset.json'
   }));
   const MOUSE_TYPE = {
     LEFT: 0,

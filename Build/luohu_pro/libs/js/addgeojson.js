@@ -14,43 +14,26 @@ var btnObject = {
     },
     fenchenAddData: function () {
         var fenchendatas = new Cesium.GeoJsonDataSource();
-        var promise = fenchendatas.load("../config/fcfh2.geojson");
-        promise.then(function (result) {
-            entities = result.entities.values;
+        var dataarr = fenchendatas.load("../config/fcfh2.geojson");
+        dataarr.then(function (pointsource) {
+            entities = pointsource.entities.values
             for (let entity of entities) {
-                position = entity.position._value;
-                var car = Cesium.Cartographic.fromCartesian(position);
-                var heights = viewer.scene.sampleHeight(car);
-                console.log(heights)
-                entity.billboard = {
-                    image: "../images/csbj/shanye.png",
-                    width: 25,
-                    height: 25,
-                    heightReference: heights
-                };
-                entity.label = {
-                    text: entity.properties.建筑名称,
-                    font: '12px Arial',
-                    fillColor: Cesium.Color.WHITE,
-                    outlineColor: Cesium.Color.BLUE,
-                    outlineWidth: 2,
-                    style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-                    pixelOffset: new Cesium.Cartesian2(0, -30),
-                    eyeOffset: new Cesium.Cartesian3(0, 0, -50),
-                    horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
-                    verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-                    scaleByDistance: new Cesium.NearFarScalar(1.5e2, 1.5, 1.5e7, 0.5),
-                    translucencyByDistance: new Cesium.NearFarScalar(1.5e2, 1.0, 1.5e7, 0.0),
-                    labelStyle: {
-                        font: 'bold 12px Arial',
-                        pixelOffsetScaleByDistance: new Cesium.NearFarScalar(1.5e2, 1.5, 1.5e7, 0.5)
-                    }
-                };
-                // entity.label.style = Cesium.LabelStyle.FILL_AND_OUTLINE;
-                // entity.label.outlineColor = Cesium.Color.BLACK;
-
+                position = entity.position._value
+                console.log(position)
+                var _x = position.x
+                var _y = position.y
+                var _z = position.z
+                var _position = new Cesium.Cartesian3(_x, _y, _z)
+                var _position_hic = Cesium.Cartographic.fromCartesian(_position)
+                var longitude =Cesium.Math.toDegrees(_position_hic.longitude)
+                var latitude  =Cesium.Math.toDegrees(_position_hic.latitude )
+                var height =150;
+                position1 = Cesium.Cartesian3.fromDegrees(longitude,latitude,height)
+                position.z=150
+                console.log(position)
+                console.log(position1)
             }
-            viewer.dataSources.add(result)
+            viewer.dataSources.add(pointsource)
         })
     },
 }

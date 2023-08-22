@@ -13,6 +13,7 @@ var btnObject = {
         var imgaesource = imageData;
         dataarr.then(function (resulte) {
             btnObject.fenchenAddData(imgaesource, resulte, urls)
+            console.log(resulte)
         })
     },
     fenchenAddData: function (images, pointsource, urlsource) {
@@ -62,7 +63,7 @@ var btnObject = {
             }
         };
     }
-
+        console.log(filterEntities)
         // 添加数据源到 viewer
         viewer.dataSources.add(pointsource);
     }

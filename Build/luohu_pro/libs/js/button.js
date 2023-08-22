@@ -15,7 +15,7 @@ $(document).ready(function () {
     }
   })
   $('.btn').click(function () {
-    viewer.entities.removeAll();
+    viewer.dataSources.removeAll();
     if ($(this).attr('id') == "fenChen") {
       $("#chenshibujian").css("display", "none")
       $("#fenchenfenhu").toggle();
@@ -23,6 +23,31 @@ $(document).ready(function () {
     if ($(this).attr('id') == "BuJian") {
       $("#fenchenfenhu").css("display", "none")
       $("#chenshibujian").toggle();
+    }
+  })
+  $('.btn1').click(function () {
+    viewer.dataSources.removeAll();
+    idName = $(this).attr('id')
+    idHtml = $(this).html();
+    if (btnObject.fnechenbtnName.indexOf(idName) > -1) {
+      urldatas = btnObject.url[0]
+      if (idName == "sy") {
+        imageName = "../images/csbj/shanye.png"
+      }
+      if (idName == "xq") {
+        imageName = "../images/csbj/zhuzhai.png"
+      }
+      if (idName == "zht") {
+        imageName = "../images/csbj/zonghe.png"
+      }
+      btnObject.btnAddData(imageName, urldatas);
+    }
+    if (idName == "zl") {
+      urlData = dataobject.fencfenhu.url;
+      for (var _i = 0; _i < dataobject.fencfenhu.txtId.length; _i++) {
+        idHtml = dataobject.fencfenhu.txtList[_i];
+        imageName = dataobject.fencfenhu.image[_i];
+      }
     }
   })
   $("#chaxun").click(function () {
